@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - ElevateGRE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #5170ff, #6b7cff);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #5170ff, #6b7cff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .blog-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .blog-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #002c5a;
+            line-height: 1.3;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #5170ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 0.8rem;
+        }
+
+        .cta-section {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #002c5a;
+        }
+
+        .cta-section p {
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #5170ff, #6b7cff);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(81, 112, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(81, 112, 255, 0.4);
+        }
+
+        .footer {
+            background: #002c5a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            .cta-section {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="media/logo_with_name.png" alt="ElevateGRE Logo" class="logo">
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="blogs.html">Blog</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>ElevateGRE Blog</h1>
+            <p>Insights, tips, and strategies to help you excel in your GRE preparation journey</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="blog-grid" id="blogGrid">
+            <!-- Blog posts will be dynamically loaded here -->
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Start Your GRE Journey?</h2>
+            <p>Join thousands of students who are already preparing with ElevateGRE. Get early access to our comprehensive study platform.</p>
+            <a href="index.html" class="cta-button">
+                <i class="fas fa-rocket"></i>
+                Get Early Access
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 ElevateGRE. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Blog data - in a real application, this would come from a CMS or API
+        const blogPosts = [
+            {
+                id: 'gre-verbal-reasoning-tips',
+                title: 'Mastering GRE Verbal Reasoning: 10 Essential Tips',
+                excerpt: 'Discover proven strategies to improve your GRE Verbal Reasoning score. Learn how to tackle reading comprehension, text completion, and sentence equivalence questions effectively.',
+                date: '2024-01-15',
+                readTime: '8 min read',
+                category: 'Verbal Reasoning',
+                icon: 'fas fa-book-open'
+            },
+            {
+                id: 'quantitative-reasoning-strategies',
+                title: 'Quantitative Reasoning: Problem-Solving Strategies That Work',
+                excerpt: 'Unlock the secrets to GRE Quantitative Reasoning success. From arithmetic to algebra, learn the techniques that will help you solve problems faster and more accurately.',
+                date: '2024-01-10',
+                readTime: '10 min read',
+                category: 'Quantitative Reasoning',
+                icon: 'fas fa-calculator'
+            },
+            {
+                id: 'analytical-writing-guide',
+                title: 'Acing the GRE Analytical Writing Assessment',
+                excerpt: 'Master the art of analytical writing for the GRE. Learn how to structure your essays, develop strong arguments, and express your ideas clearly and persuasively.',
+                date: '2024-01-05',
+                readTime: '12 min read',
+                category: 'Analytical Writing',
+                icon: 'fas fa-pen-fancy'
+            },
+            {
+                id: 'time-management-gre',
+                title: 'Time Management Strategies for GRE Success',
+                excerpt: 'Learn how to manage your time effectively during the GRE exam. Discover pacing strategies that will help you complete all sections without rushing.',
+                date: '2024-01-01',
+                readTime: '6 min read',
+                category: 'Test Strategy',
+                icon: 'fas fa-clock'
+            },
+            {
+                id: 'gre-study-schedule',
+                title: 'Creating the Perfect GRE Study Schedule',
+                excerpt: 'Build a comprehensive study plan that fits your schedule. Learn how to balance different sections and track your progress effectively.',
+                date: '2023-12-28',
+                readTime: '9 min read',
+                category: 'Study Planning',
+                icon: 'fas fa-calendar-alt'
+            },
+            {
+                id: 'overcoming-test-anxiety',
+                title: 'Overcoming Test Anxiety: A Complete Guide',
+                excerpt: 'Conquer test anxiety and perform your best on the GRE. Learn relaxation techniques, mental preparation strategies, and confidence-building exercises.',
+                date: '2023-12-20',
+                readTime: '7 min read',
+                category: 'Mental Preparation',
+                icon: 'fas fa-brain'
+            }
+        ];
+
+        function renderBlogPosts() {
+            const blogGrid = document.getElementById('blogGrid');
+            
+            blogPosts.forEach(post => {
+                const blogCard = document.createElement('div');
+                blogCard.className = 'blog-card';
+                blogCard.innerHTML = `
+                    <div class="blog-image">
+                        <i class="${post.icon}"></i>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                            <span><i class="fas fa-clock"></i> ${post.readTime}</span>
+                            <span><i class="fas fa-tag"></i> ${post.category}</span>
+                        </div>
+                        <h3 class="blog-title">${post.title}</h3>
+                        <p class="blog-excerpt">${post.excerpt}</p>
+                        <a href="blog.html?id=${post.id}" class="read-more">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                `;
+                blogGrid.appendChild(blogCard);
+            });
+        }
+
+        // Load blog posts when page loads
+        document.addEventListener('DOMContentLoaded', renderBlogPosts);
+    </script>
+</body>
+</html>
