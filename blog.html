@@ -12,7 +12,35 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Post - ElevateGRE</title>
+    <title id="pageTitle">Blog Post - ElevateGRE</title>
+    <meta name="description" id="pageDescription" content="Read expert GRE preparation tips and strategies on ElevateGRE blog. Get insights to help you ace your GRE exam.">
+    <meta name="keywords" id="pageKeywords" content="GRE preparation, GRE tips, GRE study guide, GRE exam, GRE test strategies">
+    <meta name="author" content="ElevateGRE">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" id="ogUrl" content="https://elevategre.com/blog.html">
+    <meta property="og:title" id="ogTitle" content="Blog Post - ElevateGRE">
+    <meta property="og:description" id="ogDescription" content="Read expert GRE preparation tips and strategies on ElevateGRE blog. Get insights to help you ace your GRE exam.">
+    <meta property="og:image" content="https://elevategre.com/media/logo_with_name.png">
+    <meta property="og:site_name" content="ElevateGRE">
+    <meta property="article:author" content="ElevateGRE">
+    <meta property="article:published_time" id="articlePublished" content="">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" id="twitterUrl" content="https://elevategre.com/blog.html">
+    <meta property="twitter:title" id="twitterTitle" content="Blog Post - ElevateGRE">
+    <meta property="twitter:description" id="twitterDescription" content="Read expert GRE preparation tips and strategies on ElevateGRE blog. Get insights to help you ace your GRE exam.">
+    <meta property="twitter:image" content="https://elevategre.com/media/logo_with_name.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" id="canonicalUrl" href="https://elevategre.com/blog.html">
+    
+    <!-- Additional SEO -->
+    <meta name="theme-color" content="#5170ff">
+    <meta name="msapplication-TileColor" content="#5170ff">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -481,6 +509,9 @@
                 // Update page title
                 document.title = post.title + ' - ElevateGRE';
                 
+                // Update SEO meta tags
+                updateSEOMetaTags(post, blogId);
+                
                 // Populate blog meta
                 document.getElementById('blogMeta').innerHTML = `
                     <span><i class="fas fa-calendar"></i> ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -497,6 +528,79 @@
                 document.getElementById('blogTitle').textContent = 'Blog Post Not Found';
                 document.getElementById('blogContent').innerHTML = '<p>The requested blog post could not be found. <a href="blogs.html">Return to the blog listing</a>.</p>';
             }
+        }
+
+        function updateSEOMetaTags(post, blogId) {
+            const currentUrl = `https://elevategre.com/blog.html?id=${blogId}`;
+            const publishedDate = new Date(post.date).toISOString();
+            
+            // Update basic meta tags
+            document.getElementById('pageTitle').textContent = post.title + ' - ElevateGRE';
+            document.getElementById('pageDescription').setAttribute('content', post.excerpt);
+            document.getElementById('pageKeywords').setAttribute('content', `GRE preparation, GRE tips, ${post.category.toLowerCase()}, GRE study guide, GRE exam, GRE test strategies`);
+            
+            // Update Open Graph tags
+            document.getElementById('ogUrl').setAttribute('content', currentUrl);
+            document.getElementById('ogTitle').setAttribute('content', post.title + ' - ElevateGRE');
+            document.getElementById('ogDescription').setAttribute('content', post.excerpt);
+            document.getElementById('articlePublished').setAttribute('content', publishedDate);
+            
+            // Update Twitter tags
+            document.getElementById('twitterUrl').setAttribute('content', currentUrl);
+            document.getElementById('twitterTitle').setAttribute('content', post.title + ' - ElevateGRE');
+            document.getElementById('twitterDescription').setAttribute('content', post.excerpt);
+            
+            // Update canonical URL
+            document.getElementById('canonicalUrl').setAttribute('href', currentUrl);
+            
+            // Add structured data
+            addStructuredData(post, currentUrl, publishedDate);
+        }
+
+        function addStructuredData(post, currentUrl, publishedDate) {
+            const structuredData = {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "headline": post.title,
+                "description": post.excerpt,
+                "url": currentUrl,
+                "datePublished": publishedDate,
+                "dateModified": publishedDate,
+                "author": {
+                    "@type": "Organization",
+                    "name": "ElevateGRE",
+                    "url": "https://elevategre.com"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "ElevateGRE",
+                    "url": "https://elevategre.com",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://elevategre.com/media/logo_with_name.png"
+                    }
+                },
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": currentUrl
+                },
+                "articleSection": post.category,
+                "keywords": `GRE preparation, GRE tips, ${post.category.toLowerCase()}, GRE study guide, GRE exam, GRE test strategies`,
+                "wordCount": post.content.split(' ').length,
+                "timeRequired": post.readTime
+            };
+
+            // Remove existing structured data if any
+            const existingScript = document.querySelector('script[type="application/ld+json"]');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            // Add new structured data
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.textContent = JSON.stringify(structuredData);
+            document.head.appendChild(script);
         }
 
         // Load blog post when page loads
