@@ -271,7 +271,7 @@
     </header>
 
     <main class="container">
-        <a href="blogs.html" class="back-link">
+        <a href="/blogs.html" class="back-link">
             <i class="fas fa-arrow-left"></i>
             Back to Blog
         </a>
@@ -860,9 +860,11 @@
         function loadBlogPost() {
             const urlParams = new URLSearchParams(window.location.search);
             const blogId = urlParams.get('id');
+            console.log(urlParams)
             // If blogId not found, try to get it from the path
             if (!blogId) {
                 const pathParts = window.location.pathname.split('/');
+                console.log(pathParts);
                 if (pathParts.length >= 3 && pathParts[1] === 'blog') {
                     blogId = pathParts[2]; // e.g., /blog/gre-verbal-reasoning-tips
                 }
