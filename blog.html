@@ -858,6 +858,13 @@
         function loadBlogPost() {
             const urlParams = new URLSearchParams(window.location.search);
             const blogId = urlParams.get('id');
+            // If blogId not found, try to get it from the path
+            if (!blogId) {
+                const pathParts = window.location.pathname.split('/');
+                if (pathParts.length >= 3 && pathParts[1] === 'blog') {
+                    blogId = pathParts[2]; // e.g., /blog/gre-verbal-reasoning-tips
+                }
+            }
             
             if (blogId && blogData[blogId]) {
                 const post = blogData[blogId];
@@ -879,6 +886,10 @@
                 document.getElementById('blogTitle').textContent = post.title;
                 document.getElementById('blogExcerpt').textContent = post.excerpt;
                 document.getElementById('blogContent').innerHTML = post.content;
+                // Update the URL in the address bar (without reloading)
+                const newUrl = `/blog/${blogId}`;
+                window.history.replaceState({}, '', newUrl);
+
             } else {
                 // Handle case where blog post is not found
                 document.getElementById('blogTitle').textContent = 'Blog Post Not Found';
